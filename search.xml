@@ -72,4 +72,31 @@
         <tag>搜索推荐</tag>
       </tags>
   </entry>
+  <entry>
+    <title>MarkDown常用语法</title>
+    <url>/2022/06/26/markdown/</url>
+    <content><![CDATA[<p>Markdown是一种用来写作的轻量级标记语言，是能够让我们专注写作内容的利器。在Markdown的世界里，没有复杂冗长的语法，也没有形式多样的排版选择，除了简单还是简单。Markdown以最常用易记的符号语法作为标记，不打扰创作灵感的同时让文字版式清晰明了。也正是因为简单，Markdown在编辑圈里颇受欢迎。因此这里给出了markdown的常用的相关语法。</p>
+<h2 id="Markdown的哲学"><a href="#Markdown的哲学" class="headerlink" title="Markdown的哲学"></a>Markdown的哲学</h2><h3 id="markdown"><a href="#markdown" class="headerlink" title="markdown"></a>markdown</h3><p>　　Markdown语法则是把最常用的排版需求通过标点符号来表述，一个标点加上文字就完成了排版，够快也够清晰。而这正是Markdown语法的意义所在：“我们坚信写作写的是内容，是你的所思所想，而非花样格式——Ulysses for Mac”。</p>
+<h2 id="Markdown语法宝典"><a href="#Markdown语法宝典" class="headerlink" title="Markdown语法宝典"></a>Markdown语法宝典</h2><h3 id="一、标题"><a href="#一、标题" class="headerlink" title="一、标题"></a>一、标题</h3><p>　　在Markdown中，如果要把文字内容定义为标题，在文字开头添加#号即可。Markdown最多支持6级标题，往下一级加多一个#即可。</p>
+<p><img src="/img/article_imgs/srticle3_img1.png" alt="img"></p>
+<h3 id="二、加粗，斜体，高亮"><a href="#二、加粗，斜体，高亮" class="headerlink" title="二、加粗，斜体，高亮"></a>二、加粗，斜体，高亮</h3><p>　　如果需要将文字变成斜体格式，在文字首尾各添加一个<em>号即可;加粗则是在首尾添加两个</em>号。而高亮则需要在首尾添加两个=号。</p>
+<p><img src="/img/article_imgs/srticle3_img2.png" alt="img"></p>
+<h3 id="三、引用"><a href="#三、引用" class="headerlink" title="三、引用"></a>三、引用</h3><p>　　我们习惯在首尾加双引号的做法来标记引用的内容，在Markdown上的引用语法更为简单，只需要在文本前添加向右的尖括号即可。编辑器会自动把这段引用的话独立出来，更加醒目。</p>
+<p><img src="/img/article_imgs/srticle3_img3.png" alt="img"></p>
+<h3 id="四、列表"><a href="#四、列表" class="headerlink" title="四、列表"></a>四、列表</h3><p>　　经常使用Word排版列表的小伙伴可能都会遇到列表等级错乱的情况，调整起来费时费力。在Markdown中，只需要两步就完成列表等级的划分。</p>
+<p>　　Markdown列表也有无序和有序之分。首先无序列表：在文字前添加一个*号生成一级列表，二级列表只需要首行缩进到一级列表符号之后即可，以此类推。有序列表格式和一般的方式无异，标注好1、2、3点就可以显示。</p>
+<p><img src="/img/article_imgs/srticle3_img4.png" alt="img"></p>
+<h3 id="五、代码框"><a href="#五、代码框" class="headerlink" title="五、代码框"></a>五、代码框</h3><p>　　Markdown的代码框语法简直可以虐哭一众使用HTML的小伙伴，文本内容前后添加`号就搞定了。front…input…你说啥?</p>
+<p><img src="/img/article_imgs/srticle3_img5.png" alt="img"></p>
+<h3 id="六、图片和链接"><a href="#六、图片和链接" class="headerlink" title="六、图片和链接"></a>六、图片和链接</h3><p>　　在Markdown上插入图片和链接也是非常方便的。要注意的是，插入图片和链接的语法很像，区别在于一个!号。</p>
+<p>　　图片语法：<img src="" alt=""></p>
+<p>　　链接语法：<a href=""></a></p>
+<h3 id="七、表格"><a href="#七、表格" class="headerlink" title="七、表格"></a>七、表格</h3><p>　　除了简单的排版语法外，Markdown还支持插入表格。不过这个表格需要自己用分隔符|“一笔一划”地生成。具体方法如下：</p>
+<p><img src="/img/article_imgs/srticle3_img6.png" alt="img"></p>
+<p>　　以上就是我们常用Markdown排版语法，掌握了这些语法规则足够应付日常的编辑使用。</p>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+  </entry>
 </search>
