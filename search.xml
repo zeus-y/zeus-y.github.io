@@ -91,12 +91,60 @@
 <h3 id="六、图片和链接"><a href="#六、图片和链接" class="headerlink" title="六、图片和链接"></a>六、图片和链接</h3><p>　　在Markdown上插入图片和链接也是非常方便的。要注意的是，插入图片和链接的语法很像，区别在于一个!号。</p>
 <p>　　图片语法：<img src="" alt=""></p>
 <p>　　链接语法：<a href=""></a></p>
-<h3 id="七、表格"><a href="#七、表格" class="headerlink" title="七、表格"></a>七、表格</h3><p>　　除了简单的排版语法外，Markdown还支持插入表格。不过这个表格需要自己用分隔符|“一笔一划”地生成。具体方法如下：</p>
+<pre><code>高级语法：设置图片的大小与位置
+&lt;img src=&quot;&quot; width = &quot;600&quot; height = &quot;160&quot; div align=center /&gt;
+</code></pre><h3 id="七、表格"><a href="#七、表格" class="headerlink" title="七、表格"></a>七、表格</h3><p>　　除了简单的排版语法外，Markdown还支持插入表格。不过这个表格需要自己用分隔符|“一笔一划”地生成。具体方法如下：</p>
 <p><img src="/img/article_imgs/srticle3_img6.png" alt="img"></p>
 <p>　　以上就是我们常用Markdown排版语法，掌握了这些语法规则足够应付日常的编辑使用。</p>
 ]]></content>
       <categories>
         <category>教程</category>
       </categories>
+  </entry>
+  <entry>
+    <title>研究生科研总结</title>
+    <url>/2022/06/27/%E7%A7%91%E7%A0%94%E6%88%90%E6%9E%9C/</url>
+    <content><![CDATA[<h2 id="个人简介"><a href="#个人简介" class="headerlink" title="个人简介"></a>个人简介</h2><p>本人就读于北京科技大学计算机技术专业，由于是被保送到北京科技大学，所以在大四的时候就跟着导师做一些相关的科研工作，主要的领域涉及智能驾驶、机器学习、深度学习、工控异常检测等方面。</p>
+<h2 id="智能驾驶"><a href="#智能驾驶" class="headerlink" title="智能驾驶"></a>智能驾驶</h2><h3 id="项目介绍"><a href="#项目介绍" class="headerlink" title="项目介绍"></a>项目介绍</h3><p>智能驾驶的项目是在大四的时候就开始做的，主要是根据导师的自然基金进行相关的研究。</p>
+<p><img src="/img/article_imgs/srticle4_img2.png" alt="img"></p>
+<p>目前智能交通系统研究方兴未艾，车辆的自动控制驾驶备受瞩目，车辆间庞大的数据传输和频繁的信息交换司空见惯，但海量数据长时间、连续性地频繁交流在控制策略的执行过程中往往是非必要的，这样的控制策略会带来过度的通信、计算资源消耗。因此本课题的主要研究内容就是研究在车辆编队行驶过程中，在保持自动驾驶车辆编队稳定的同时尽量降低此类不必要的能源损耗。</p>
+<h3 id="研究内容"><a href="#研究内容" class="headerlink" title="研究内容"></a>研究内容</h3><p><img src="/img/article_imgs/srticle4_img1.png" width = "600" height = "160" div align=center /></p>
+<p>  基于上述研究目标，博主针对现有的自动驾驶编队的动力学系统进行了相关的改进工作。具体地，我们设计了全新的自动驾驶车辆编队系统控制器，考虑在一定特殊情况下车辆编队的平稳运行，我们设计了事件触发控制器，进一步地，博主对事件触发控制器进一步研究、升级。提出了基于自触发控制的车辆编队系统，通过李雅普诺夫函数证明了系统可以在该控制器的情况下保持车辆编队的平稳、安全运行。<br><img src="/img/article_imgs/srticle4_img3.png" alt="img"></p>
+<h3 id="研究成果"><a href="#研究成果" class="headerlink" title="研究成果"></a>研究成果</h3><p>由于实验室经费问题，此项目的成果主要以理论成果为主。博主在此项目上花费了将近两年的时间，共发表了两篇SCI论文。十分有幸，其中一篇是一区的top期刊，成果如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[1]. Wang W, Wang C, Guo Y, et al. Self-triggered consensus of vehicle platoon system with time-varying topology[J]. Frontiers in Neurorobotics, 2020, 14: 53. 已发表. SCI 刊源. SCI 检索号：000584394800001. SCI期刊影响因子：2.65.</span><br><span class="line">[2]. Wang W, Wang C, Wang Z, et al. Nonlinear consensus-based autonomous vehicle platoon control under event-triggered strategy in the presence of time delays[J]. Applied Mathematics and Computation, 2021, 404: 126246. 已发表. SCI 刊源. SCI 检索号：000644164200002. SCI期刊影响因子：4.091.</span><br></pre></td></tr></table></figure>
+<h2 id="工控异常检测"><a href="#工控异常检测" class="headerlink" title="工控异常检测"></a>工控异常检测</h2><h3 id="项目介绍-1"><a href="#项目介绍-1" class="headerlink" title="项目介绍"></a>项目介绍</h3><p>研究生科研的第二阶段主要内容就是工控异常检测项目，这个项目是与国家某重要安全部分合作的项目。目的是通过学术方面的内容提高国家对于工控领域异常检测能力，识别攻击行为，保护国家财产安全。</p>
+<p>得益于计算机网络的发展，工业控制系统在近年来也取得飞跃式发展， 众多工业控制系统逐渐接入互联网，并朝着数据化，智慧化发展。公共网络与工业互联网不断相互融合， 工业控制系统发生了巨大的蜕变，逐渐由封闭网络转变成开放网络，由传统 的自动化系统变成高级的智能化系统[1]。工业控制系统的生产力得到了巨大 的提升，但同时造成大量的工业控制系统被暴露在公共网络，极易遭受黑客 的攻击而产生巨大的安全隐患。</p>
+<h3 id="研究内容-1"><a href="#研究内容-1" class="headerlink" title="研究内容"></a>研究内容</h3><p>近年来，工控恶意流量检测技术得到了迅速的发展，但是工控恶意流量检测模型的训练需要一个数据量大的均衡数据集，而工业控制系统中各类数据存在着严重不均衡问题，并且，基于工控系统的异常流量数据获取存在种种困难。因此，找到一种解决工控系统样本不均衡的方法，避免模型发生过拟合，提高工控恶意流量检测算法的性能对保护工控系统的安全至关重要。针对上述问题，本文结合工业控制系统的实际需求和具体的数据情况，拟采用迁移学习的方法，解决工业控制系统的数据集不均衡的问题，避免模型发生过拟合，提高工控恶意流量检测性能。具体地，本文的研究内容主要分为以下三部分:</p>
+<p>(1) 基于实例迁移的工控恶意流量检测算法。</p>
+<p><img src="/img/article_imgs/srticle4_img4.png" alt="img"><br><strong><center>改进前后混淆矩阵对比图</center></strong></p>
+<p>目前，工控恶意流量检测算法的识别效果较差，并且针对工业控制系统样本不均衡问题的研究较少。针对这一现状，本文结合工业控制系统的实际 情况，设计了一种基于改进 TrAdaBoost 算法的工控恶意流量检测分类器， 通过迁移多数类实例样本来指导少数类实例样本，通过设计权重更新公式和 独特的策略融合各个弱分类器实现了在不降低源域样本精度的前提下提高目 标域样本的性能。在实验部分，本论文通过设计多组对比实验，验证了所提 出的模型大大提高了分类器对于恶意类异常样本的识别性能。并且与现有的 其他分类算法相比，该模型具有明显的优势。</p>
+<p>(2) 基于域迁移数据增强的工控恶意流量检测算法。</p>
+<p><img src="/img/article_imgs/srticle4_img5.png" width = "600" height = "600" div align=center /><br><strong><center>基于域迁移数据增强的工控恶意流量检测算法架构图</center></strong></p>
+<p>在工业控制系统中，恶意类攻击样本的数量较少、样本多样性较差，工 控恶意流量检测模型往往无法针对少量的攻击样本学习到充足的特征，导致 工控恶意流量检测模型往往存在无法识别演化攻击的问题。针对此问题，本 文提出了基于域迁移数据增强的工控恶意流量检测算法。该算法从数据增强 的角度来解决工控系统中存在的样本不均衡的问题。具体地，本文融合循环 一致生成对抗网络(Cycle-Consistent Generative Adversarial Networks， CycleGAN)与条件生成对抗网络(Conditional Generative Adversarial Networks，CGAN)，并设计全新的损失函数，构建了基于梯度惩罚的条件 循环一致生成对抗网络(Conditional Cycle-Consistent Generative Adversarial Networks based on Gradient Penalty，C-CycleGAN-GP)模型。该模型通过域 迁移能够高效率地生成各种类型的少数类攻击样本，并通过Wasserstein距离 和梯度限制解决了传统的生成网络存在的难以训练的问题。在实验部分，本 文通过多组实验，校验该模型的生成样本的有效性与正确性，最终证明了该模型能够生成指定类型的高质量异常样本。并且通过对扩充数据集进行分类，验证了该方法能够提高恶意流量检测分类器对异常样本的分类性能。</p>
+<h3 id="研究成果-1"><a href="#研究成果-1" class="headerlink" title="研究成果"></a>研究成果</h3><p>在此部分的成果主要由一个应用创新和两个算法创新组成，具体地，博主提出了从不同的角度提出了两种不同的恶意流量检测算法解决了工业控制系统的安全问题，并以此发表了两篇相关的SCI论文。此外，为了更好地利用这两种算法，博主设计了安全预警系统，充分利用提出的两种异常检测算法，检测工控系统中的各种异常行为。<br><img src="/img/article_imgs/srticle4_img6.png" alt="img"><br><strong><center>工控安全预警系统</center></strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[1]. Wang W, Wang C, Guo Y, et al. Industrial Control Malicious Traffic Anomaly Detection System Based on Deep Autoencoder[J]. Frontiers in Energy Research, 2021, 8: 380. 已发表. SCI 刊源. SCI 检索号：000613512500001. SCI期刊影响因子：4.008.</span><br><span class="line">[2]. Wang W, Wang C, Wang Z, et al. Abnormal detection technology of industrial control system based on transfer learning[J]. Applied Mathematics and Computation, 2022, 412: 126539. 已发表. SCI 刊源. SCI 检索号：000697154500003. SCI期刊影响因子：4.091.</span><br></pre></td></tr></table></figure>
+<h2 id="深度学习"><a href="#深度学习" class="headerlink" title="深度学习"></a>深度学习</h2><h3 id="项目介绍-2"><a href="#项目介绍-2" class="headerlink" title="项目介绍"></a>项目介绍</h3><p>作为一名搞人工智能的研究生不会神经网络，不懂深度学习不是一个好的研究生。个人兴趣使然，自己在科研之余深耕于深度学习项目。</p>
+<h3 id="研究内容-2"><a href="#研究内容-2" class="headerlink" title="研究内容"></a>研究内容</h3><p>在这部分的研究，主要以探索性的学习为主。这里博主是以文本分类为入手点，开始学习各种深度学习算法，使用的是清华大学提供的开源中文新闻数据集。</p>
+<p>学习经历：RNN -&gt; CNN -&gt; Attention -&gt; Transformer -&gt; Bert</p>
+<p>在这之后，对于bert的各种变体也做了一些相关的研究，也尝试解决超长文本分类的问题，但是效果不是特别理想。</p>
+<!-- ## 机器学习
+
+### 项目介绍
+
+航空流量预测项目
+
+### 研究内容
+
+### 研究成果 -->
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>三年科研匆匆而过，留下的也只剩下几篇论文来证明自己曾经的存在。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[1]. Wang W, Wang C, Guo Y, et al. Industrial Control Malicious Traffic Anomaly Detection System Based on Deep Autoencoder[J]. Frontiers in Energy Research, 2021, 8: 380. 已发表. SCI 刊源. SCI 检索号：000613512500001. SCI期刊影响因子：4.008.</span><br><span class="line">[2]. Wang W, Wang C, Wang Z, et al. Abnormal detection technology of industrial control system based on transfer learning[J]. Applied Mathematics and Computation, 2022, 412: 126539. 已发表. SCI 刊源. SCI 检索号：000697154500003. SCI期刊影响因子：4.091.</span><br><span class="line">[3]. Wang W, Wang C, Guo Y, et al. Self-triggered consensus of vehicle platoon system with time-varying topology[J]. Frontiers in Neurorobotics, 2020, 14: 53. 已发表. SCI 刊源. SCI 检索号：000584394800001. SCI期刊影响因子：2.65.</span><br><span class="line">[4]. Wang W, Wang C, Wang Z, et al. Nonlinear consensus-based autonomous vehicle platoon control under event-triggered strategy in the presence of time delays[J]. Applied Mathematics and Computation, 2021, 404: 126246. 已发表. SCI 刊源. SCI 检索号：000644164200002. SCI期刊影响因子：4.091.</span><br><span class="line">[5]. Wang W, Guo J, Wang Z, et al. Abnormal flow detection in industrial controlnetwork based on deep reinforcement learning[J]. Applied Mathematics and Computation, 2021, 409: 126379.已发表， SCI 刊源， 已被检索，检索号：WOS:000715743900028. SCI 期刊影响因子: 4.091</span><br><span class="line">[6]. Wang, W., Sun, Y., Yuan, M., Wang, Z., Cheng, J., Fan, D., ... &amp; Wang, C. (2021). Projective synchronization of memristive multidirectional associative memory neural networks via self-triggered impulsive control and its application to image protection. Chaos, Solitons &amp; Fractals, 150, 111110.</span><br><span class="line">[7]. Wang, W., Wang, Z., Zhou, Z., Deng, H., Zhao, W., Wang, C., &amp; Guo, Y. (2021). Anomaly detection of industrial control systems based on transfer learning. Tsinghua Science and Technology, 26(6), 821-832.</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+        <tag>深度学习</tag>
+      </tags>
   </entry>
 </search>
