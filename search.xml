@@ -116,4 +116,53 @@
         <tag>打工人</tag>
       </tags>
   </entry>
+  <entry>
+    <title>实习经历总结（拍照搜题业务）</title>
+    <url>/2022/06/26/%E5%AE%9E%E4%B9%A0%E7%BB%8F%E5%8E%86/</url>
+    <content><![CDATA[<h2 id="业务介绍"><a href="#业务介绍" class="headerlink" title="业务介绍"></a>业务介绍</h2><p>博主在21年的时候赶上了教育行业的末班车在上半年去了国内某知名教育培训行业做推荐算法的相关工作，第一次有意义的实习，还是要记录下来自己所做的一些工作。</p>
+<p>工作的主要内容是简要来说就是拍照搜题，用户（学生）有不会做的题可以通过app拍下照片，上传到我们的app中，然后我们根据用户的照片，通过解析图片的内容，从题库中找到这个题的答案返回给用户。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">后记：当我们回忆往事的时候，不会因为虚度年华而悔恨，也不会因为碌碌无为而羞愧。</span><br></pre></td></tr></table></figure>
+<h2 id="拍题搜索概述"><a href="#拍题搜索概述" class="headerlink" title="拍题搜索概述"></a>拍题搜索概述</h2><p>大家常用的网页搜索引擎帮助用户从海量的数据中找到自己需要的文章，在此过程中需要解决的三个核心问题：相关性，质量，流行度，在相关的结果中将质量权威性和流行度最好的结果展示在首位。拍题搜索同样类似于搜索引擎，用户的Query通过OCR部分转换成文本参与文本检索，无法转换成文本的几何图形通过深度学习模型编码成向量参与向量检索，并将文本检索和向量检索得到的结果进行归并排序。拍题搜索必须在相同的结果中选择质量最好的放到首位。于是在Query理解、相关性计算和排序算法上需要不同的处理方式。</p>
+<p>拍题搜索和通用搜索相比，在数据规模和丰富程度上相对较小，可以在准确性方面做出更多针对性处理，因此在搜题领域超越通用网页搜索引擎是我们的设计目标。</p>
+<h2 id="拍题搜索关键性问题"><a href="#拍题搜索关键性问题" class="headerlink" title="拍题搜索关键性问题"></a>拍题搜索关键性问题</h2><h3 id="Query解析"><a href="#Query解析" class="headerlink" title="Query解析"></a>Query解析</h3><p>如下图所示，一个典型的Query会被分解成包含文本的部分和包含图形的部分，文本部分通过OCR识别成文本进行文本检索，图形部分通过深度学习向量化然后使用向量检索。一般情况下用户Query中图曝光过度，拍摄覆盖不足等情况导致的信息残缺现象很常见，是我们拍图搜索需要克服的若干挑战性问题。<br><img src="/img/article_imgs/srticle2_img1.png" alt="img"></p>
+<h3 id="基础相关性"><a href="#基础相关性" class="headerlink" title="基础相关性"></a>基础相关性</h3><p>本系统的基础检索部分是由Elastic Search来实现，基础相关性打分主要用于召回，为后续LTR排序做好准备。BM25 是一种用来评价搜索词和文档之间相关性的算法，它是一种基于概率检索模型提出的算法，再用简单的话来描述下BM25算法：我们有一个Query和一批文档D，现在要计算Query和每篇文档D之间的相关性分数，我们的做法是，先对Query进行切分，得到单词qi，然后单词的分数由3部分组成：单词qi和D之间的相关性，单词qi和D之间的相关性，每个单词的权重，最后对于每个单词的分数我们做一个求和，就得到了Query和文档之间的分数。</p>
+<p>在不同版本的BM25的公式略有不同，其中的常数来自于对题库数据的统计，我们采用的版本为：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">def BM25(docfreq, N, freq, avgdl, dl):</span><br><span class="line">    n = docfreq    # number of documents containing term</span><br><span class="line">    # N # total number of documents with field</span><br><span class="line">    # avgdl = 58.7 # avgdl, average length of field</span><br><span class="line">    # dl = 264 # dl, length of field(approximate)</span><br><span class="line">    b = 0.75 # b, length normalization parameter</span><br><span class="line">    k1 = 1.2 # k1, term saturation parameter</span><br><span class="line">    boost = 6.6 # or 3  </span><br><span class="line">    tf = freq / (freq + k1 *(1 - b + b* dl / avgdl))</span><br><span class="line">    idf = math.log(1 + (N - n + 0.5) / (n + 0.5))</span><br><span class="line">    score = boost *idf* tf</span><br><span class="line">    return score</span><br></pre></td></tr></table></figure>
+<p>基础相关性算法决定了召回的质量，于是优化分词、公式解析和特征词提取对结果的影响非常关键，是拍题搜索的关键技术。（该部分后续做专题介绍）</p>
+<h3 id="文本相似"><a href="#文本相似" class="headerlink" title="文本相似"></a>文本相似</h3><p>基础相关性提供的打分并不能作为排序依据，原因是因为Query图片中的OCR文本残缺或者一定概率错误是经常发生的，非常相似的改编题目也是很常见，这些条件都给我们开发拍题搜索带来了新的挑战。一个典型的例子如下图，每个pair的上面一行代表Query中的文本，下面一行代表召回的结果与之比较。<br><img src="/img/article_imgs/srticle2_img2.png" alt="img"></p>
+<p>从下图可以体会到，对召回的题目进行排序选择匹配最好的一个问题不能简单通过字符串比较而是需要使用多种文本相似的打分函数作为特征用来作为LTR模型的输入。这些文本相似度函数的选择依据是需要均衡OCR识别错误的鲁棒性和对相似题目文本差异的敏感性。</p>
+<h3 id="Learn-to-Rank排序和Learning-for-Match"><a href="#Learn-to-Rank排序和Learning-for-Match" class="headerlink" title="Learn to Rank排序和Learning for Match"></a>Learn to Rank排序和Learning for Match</h3><p>基础检索系统召回的列表再经过Learning to Rank排序和Learning for Match比较选出最佳匹配。一般的网页搜索也有相关性截断的概念，拍题搜索对克服OCR噪声搜到相同题目的要求更高。</p>
+<p><img src="/img/article_imgs/srticle2_img6.png" alt="img"></p>
+<p>Learning to rank (LTR)在搜索、计算广告、推荐系统场景有广泛的应用。LTR 在 2010 年前后受到了相对较多关注，也出现了一批以 LTR 为基础的算法模型。检索问题可以看做是给定 Query 后，系统对文档集合中的候选 doc 进行检索，并对其排序，返回得分最高的 doc。其中排序任务使用一个排序模型f(q,d)对 doc 进行排序，其中q表示查询，d表示候选 doc。实际上大多数 LTR 模型对每条doc是单独预测的，一个 Query 对应的多个 doc 之间再预测时是没有产生关联的（不考虑 doc 之间特征层面的交叉的情况下）。例如某个 Query 对应了 n 条 doc，每个 doc 有其对应的 label，相应的组成了 n 条 训练数据，在训练阶段会通过模型对这 n 条训练数据的排序进行优化，但是在预测阶段实际上这 n 条数据是独立预测的。RankNet-&gt; LambdaRank-&gt; LambdaMART 这一系列算法的作者是Chris Burges，对搜索推荐领域影响很大。</p>
+<p><img src="/img/article_imgs/srticle2_img7.png" alt="img"></p>
+<p>我们采用的LTR模型为LambdaRank。LambdaRank算法采用NDCG（Normalized discounted cumulative gain）衡量排序质量和采用GBDT树模型。由于NDCG是位置相关的，因而与其相关的 loss 函数多是不可微的，直接优化的方法难以对其做优化。为了解决此问题，不同的LambdaRank实现使用了不同技巧，例如下面两个公式有较好的表现，最终我们选择了LightGBM。</p>
+<p><img src="/img/article_imgs/srticle2_img3.png" alt="（RankLib）"></p>
+<center>RankLib</center>
+
+<p><img src="/img/article_imgs/srticle2_img4.png" alt="LightGBM"></p>
+<center>LightGBM</center>
+
+<p>下图显示了我们目前的LTR系统中使用的特征的一个例子，整个模型筛选出了80多个特征表达了相关性、质量、泛化的流行度信号，训练使用了精选的4万多个标注样本覆盖了K12的全部科目和大部分题型。实际效果在题库有题的情况下首位搜对率约为96%。</p>
+<p><img src="/img/article_imgs/srticle2_img5.png" alt="LightGBM"></p>
+<p>LTR模型是listwise类的模型存在固有的缺陷，就是虽然是树模型，但是无法使用类型特征，而实际场景中不同类型的题目需要差异化的比较方式。解决这个问题的方法是在LTR排序后，叠加一个pointwise类型的模型来准确判断哪些结果和用户Query是同一个题，我们称为Learning for Match（此算法以后将单独做专题介绍）。LFM的思路类似网页搜索权威性算法和自动驾驶中的经典问题Feature-based Localization算法的结合，从Query和题库题目中抽取匹配的特征进行匹配这些特征包含图像全局不变性描述特征和文本特征，每个特征都有不同的置信度这些置信度源自于离线的训练和当前召回结果的统计。最后我们通过模型对召回结果进行合理的截断，只显示和用Query匹配的结果。</p>
+<h2 id="拍题搜索系统实践"><a href="#拍题搜索系统实践" class="headerlink" title="拍题搜索系统实践"></a>拍题搜索系统实践</h2><p>一说起搜索引擎，大家第一想到的就是倒排索引。要实现倒排索引首先需要一个致密哈希表，因为数据巨大和必须放进内存于是必须是（in-place dense hash map），数据还需要使用trie树、跳跃表等进行压缩以节约内存，然后还需要恰当管理倒排链表使用尽可能少的比较例如著名weak and算法，逻辑层还需要解析语法树来实现查询逻辑，由于数据量巨大管理多个结点的分布式数据管理和计算系统也必不可缺。如果真的从头开始设计的化，这个挑战将会非常大，幸运地是Elastic Search + Lucene已经能够帮我们妥善地解决这些问题。ES是为通用搜索设计的，在拍题搜索场景中并不能直接使用需要对一下问题做处理：</p>
+<h3 id="Common-Term-Query"><a href="#Common-Term-Query" class="headerlink" title="Common Term Query"></a>Common Term Query</h3><p>一个经典的例子，to be or not to be，这样一个句子中仅仅包含了系动词介词否定词这些非常高频的词汇。再如 1+2+3，△ ABC 这样的仅仅包含数字的公式更是由高频字符组成的。对于通用搜索来说，这样的查询词是难以找到需要的结果的，但是对于拍题搜索这样的查询很常见。对于这样的文本，建库时对文档和查询时对Query做同样的语义识别和特征抽取形成更抽象的特征词tag，来使得查询词有高得BM25打分从而提升召回区分度。</p>
+<h3 id="不同字段不同策略"><a href="#不同字段不同策略" class="headerlink" title="不同字段不同策略"></a>不同字段不同策略</h3><p>网页搜索中一个通常的处理方式是，标题和文档结构中重要部分具有更高的权重 。拍题搜索也有相似的问题，例如对于阅读题，相同的短文不同提问的改编题很多，如果不能区分对待则会导致相同的长短文部分文本的相似度对打分的影响压制了不同的子题短文本之间差异带来的影响，导致正确的召回结果排序过后不能被召回。通过对大量题型的分析，使用策略结合模型把待搜索的题目分解成为主题区域和子题子题区域，在召回和排序过程中给子题区域更高的权重。召回过程中ES提供了dis_max查询指令可以近似解决此类查询问题。在排序模型和匹配模型中需要有一系列子题特征来更敏感地表达子题的相似度。</p>
+<h3 id="长Query的缩减"><a href="#长Query的缩减" class="headerlink" title="长Query的缩减"></a>长Query的缩减</h3><p>一般情况下用户使用网页搜索输入搜索词的长度大约平均3个词，而拍题搜索平均输入词长度大约60多个词。一般的搜索引擎Query解析的过程会有Query意图猜测的过程来对Query做扩展，然后对不同的扩展并行查询。我们定义拍题搜索长Query为超过平均长度的Query，此类Query数量占比大约50%总耗时占比大约是57%，由于BM25的打分和次序无关，越长的Query打分区分度越差，这些长Query的漏召回和性能问题都是挑战。因此拍照搜题搜索引擎采用了相反的方式，从长Query中通过语义理解，提取关键特征作为指纹来进行召回，既增加召回时候的区分度，又能大幅提升性能。</p>
+<h3 id="皮尔逊文本对齐方法"><a href="#皮尔逊文本对齐方法" class="headerlink" title="皮尔逊文本对齐方法"></a>皮尔逊文本对齐方法</h3><p><img src="/img/article_imgs/srticle2_img8.png" alt="LightGBM"></p>
+<p>对于，用户搜索的内容与题库中的题进行匹配时，我们使用基于皮尔逊的文本对齐方式，将query与question中相同的词进行了匹配，然后利用他们所在的坐标构建出如图左上部分的图，横坐标代表的是question中字的下标，纵坐标代表的是query中字的下标，不同的颜色代表的是不同的question与query的匹配结果。</p>
+<p>由于皮尔逊的性质，我们可以知道若question与query是相关的，那么他们肯定是在一条直线上。因此我们使用卷积的方式找出可能存在的直线，卷积之后的图如图左下所示。此时我们可以清楚看出每个question与query的匹配的程度。此时，我们也可以知道每个question与query的起始与终止匹配的词的位置。这样我们就将锚点匹配限定在这一区间内。</p>
+<p>通过皮尔逊模型，我们可以得到与query匹配字最多的question。但是此时得到的question并不一定是我们所需要的question，例如，数学中的改编题。一个数字的改变就可能导致整个题目发生变换，因此，这一性质，我们并没有使用。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>公司的整个拍照搜题系统包含了超过2.6亿个文档（题目），涵盖了K12不同的科目题型也包含中文、英文、公式、数理化符号和图形，这些数据是实时生产入库和被展示，搜索首位搜对率对用户体验的非常重要。拍题搜索采用了普通网页搜索的基础架构，由于数据和Query的场景有很大差别，在算法和技术方面需要有独特色设计来应对这些挑战。本文限于编者水平和开发进度压力难免有错误和疏漏，请读者指正。</p>
+<h2 id="个人感悟"><a href="#个人感悟" class="headerlink" title="个人感悟"></a>个人感悟</h2><p>这段实习收获颇多，第一次接触这么大的一个系统，在mentor的带领下，我们逐渐将一个复杂的问题，拆解成一个个小的问题，然后分别处理其中的每一个小问题，在这其中，明白了碰到问题应该如何处理，也懂得了团队协作，共同努力的重要性。</p>
+]]></content>
+      <categories>
+        <category>搜索推荐</category>
+        <category>工作</category>
+      </categories>
+      <tags>
+        <tag>工作</tag>
+        <tag>搜索推荐</tag>
+      </tags>
+  </entry>
 </search>
