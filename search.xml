@@ -165,4 +165,201 @@
         <tag>搜索推荐</tag>
       </tags>
   </entry>
+  <entry>
+    <title>工作必备工具：git</title>
+    <url>/2023/04/30/git/</url>
+    <content><![CDATA[<h1 id="git-指南"><a href="#git-指南" class="headerlink" title="git 指南"></a>git 指南</h1><h2 id="高频使用的git指令"><a href="#高频使用的git指令" class="headerlink" title="高频使用的git指令"></a>高频使用的git指令</h2><p>进入新团队需要做的一系列git 操作</p>
+<ol>
+<li>注册内网 gitlab 账户2管进项目</li>
+<li>有了权限后，git clone ‘url’项目到本地</li>
+<li>自己创建新的项目分支 git branch’分支名</li>
+<li>开始编码吧</li>
+<li>git clone 默认是下载了所有分支的代码</li>
+<li>git branch -r查看项目所有分支</li>
+<li>git branch -a查看项目所有远程分支</li>
+<li>git checkout’分支名’切换分支</li>
+<li>git branch打印出来所有的分支，以及当前所在分支11. git log 查看提交记录，退出 英文状态下Q</li>
+<li>git reflog 可查看修改记录(包括git reset的回退记录)13. git reset —hard (commit id} 回退版本</li>
+<li>git stash //代码放进暂存区(未被commit的代码)15. git stash apply 还原</li>
+<li>git stash drop 清除最近一次的stash记录 黑马程序员</li>
+<li>git stash pop 还原并清除最近一次 stash</li>
+<li>git stash list 查看暂存列表</li>
+<li>git stash clear 清空所有 stash 的记录</li>
+<li>git remote-v显示所有远程仓库</li>
+<li>git remote add url 添加一个远程仓库</li>
+<li>git remote rm name #删除远程仓库</li>
+<li>git remote rename old name newname #修改仓库名</li>
+</ol>
+<h2 id="git-merge-冲突后恢复到合并前状态"><a href="#git-merge-冲突后恢复到合并前状态" class="headerlink" title="git merge 冲突后恢复到合并前状态"></a>git merge 冲突后恢复到合并前状态</h2><ol>
+<li><p>第一种方案</p>
+<p>git merge —abort // 回滚到合并之前</p>
+</li>
+<li>第二种方案<br>git stash<br>git stash clear</li>
+</ol>
+<h2 id="版本回退"><a href="#版本回退" class="headerlink" title="版本回退"></a>版本回退</h2><p>解决方法</p>
+<ol>
+<li>运行 git reflog 命令查看你的零食变更纪律</li>
+<li>然后用 git reset —hard {commitid} 回退到指定commitid的版本</li>
+</ol>
+<p>git reset 与 git revert的区别：</p>
+<pre><code>git reset --hard &#123;commit id&#125; 回退到某一个版本
+git revert -n &#123;commit id&#125; 回退到某一个commit 冰生成一个新的版本
+</code></pre><h2 id="拉取远程分支"><a href="#拉取远程分支" class="headerlink" title="拉取远程分支"></a>拉取远程分支</h2><p>拉取远程分支并建立本地分支，但不会自动切换到此本地分支</p>
+<pre><code>git fetch origin 远程分支名:本地分支名x
+git checkout -b 本地分支名origin/远程分支名
+</code></pre><h3 id="分支合并"><a href="#分支合并" class="headerlink" title="分支合并"></a>分支合并</h3><pre><code>git merge a 将a分支合并到当前分支  需要先更新本地的代码，合并的也是本地，不是合并的远程
+</code></pre><p>注意事项:</p>
+<pre><code>合并分支需要先更新本地分支代码，然后将本地分支1合并到本地分支2，不能直接合并远程分支1到本地分支2
+</code></pre><h3 id="合并分支到master分支"><a href="#合并分支到master分支" class="headerlink" title="合并分支到master分支"></a>合并分支到master分支</h3><p>   git 如何把分支代码合并到master主分支上<br>   1.首先切换到分支</p>
+<p>   git checkout 分支</p>
+<p>   2.使用git pull 把分支代码pull下来</p>
+<p>   git pull</p>
+<p>   3.切换到主分支</p>
+<p>   git checkout master</p>
+<p>   4.把分支的代码merge到主分支</p>
+<p>   git merge 分支</p>
+<p>   5.git push推上去ok完成,现在 你自己分支的代码就合并到主分支上了</p>
+<p>   git push</p>
+<h3 id="暂存"><a href="#暂存" class="headerlink" title="暂存"></a>暂存</h3><p>当你需要紧急切换到主分支，执行紧急任务的时候，可以使用</p>
+<pre><code>git stash // 当前分支代码加入暂存区
+git stash list // 查看暂存记录id
+git stash apply // 还原
+git stash drop 删除最后一条暂存区信息
+</code></pre><h3 id="修改分支名-重命名"><a href="#修改分支名-重命名" class="headerlink" title="修改分支名(重命名)"></a>修改分支名(重命名)</h3><pre><code>git branch -moldName newName
+</code></pre><h3 id="删除本地分支和远程分支"><a href="#删除本地分支和远程分支" class="headerlink" title="删除本地分支和远程分支"></a>删除本地分支和远程分支</h3><pre><code>1. git branch -d&#39;分支名2.gitbranch-D分支名//强制删除3.gitpush
+2. origin --delete&#39;分支名&#39;// 删除远程分支
+</code></pre><h3 id="新建本地分支及远程分支"><a href="#新建本地分支及远程分支" class="headerlink" title="新建本地分支及远程分支"></a>新建本地分支及远程分支</h3><ol>
+<li>git branch分支名//本地新建分支</li>
+<li>git fetch origin b1:b2//从远程拉取分支 b1的代码到本地并新建b2分支</li>
+</ol>
+<h3 id="查看和修改本地分支和远程分支"><a href="#查看和修改本地分支和远程分支" class="headerlink" title="查看和修改本地分支和远程分支"></a>查看和修改本地分支和远程分支</h3><pre><code>git remote -v   //查看git对应的远程仓库地址
+git remoterm origin     //删除关联对应的远程仓库地址
+git remote -v   //查看是否删除成功，如果没有任何返回结果，表示OK
+git remote add origin https://github.com/developers-youcong/MetronicTemplate.git    //重新关联git远程仓库地址
+</code></pre><h2 id="Git-打标签发布"><a href="#Git-打标签发布" class="headerlink" title="Git 打标签发布"></a>Git 打标签发布</h2><p>一般项目发布都有版本号，打标签就是为了记录此时版本下的代码，每次项目发<br>布前给当前代码打上对应标签号，以后可以根据标签号找到任一版本的代码。</p>
+<p>相关指令:</p>
+<ol>
+<li>获取远程标签<br>git fetch —tags // 拉取远程标签<br>git tag // 查看标签<br>git fetch origin tag24.10//用于精确的拉取指定的某个版本，适合运维同学部署指定版本</li>
+<li><p>新建标签</p>
+<p>git tag -a v1.4 -m “my version 1.4”</p>
+</li>
+</ol>
+<h2 id="git-cherry-pick-摘樱桃"><a href="#git-cherry-pick-摘樱桃" class="headerlink" title="git cherry-pick (摘樱桃)"></a>git cherry-pick (摘樱桃)</h2><p>使用场景:</p>
+<ol>
+<li>代码commit 到错误的分支</li>
+<li>转移另一个代码库的提交A</li>
+</ol>
+<p>在当前分支重新复制提交一份改commit的代码，生成新的commitHash x配置项</p>
+<p>在提交信息的末尾追加一行(cherrypicked from commit)，方便以后查到这个提交是如何产生的。</p>
+<pre><code>git cherry-pick(commitHashid)
+</code></pre><h2 id="git-rebase-和-git-merge"><a href="#git-rebase-和-git-merge" class="headerlink" title="git rebase 和 git merge"></a>git rebase 和 git merge</h2><pre><code>rebase翻译为变基，他的作用和merge很相似，用于把一个分支的修改合并到当前分支上，不同于git rebase的是，git merge在不是fast-forward(快速合并)的情况下，会产生一条额外的合并记录，类似Merge branchxxxintoxxx的一条提交信息。
+</code></pre><h2 id="取消本地文件修改"><a href="#取消本地文件修改" class="headerlink" title="取消本地文件修改"></a>取消本地文件修改</h2><ol>
+<li><p>未使用 git add 缓存代码时。</p>
+<p>git checkout —filepathname</p>
+<p>(比如:git checkout -readme.md，不要忘记中间的“—”，不写就成了检出分支了!!)。<br>放弃所有的文件修改可以使用git checkout 命令</p>
+<p>此命令用来放弃掉所有还没有加入到缓存区(就是git add命令)的修改:内容修改与整个文件删除。但是此命令不会删除掉刚新建的文件;因为刚新建的文件还没有加入到git的管理系统中，所以对于git是未知的，因此自己手动删除就行了。</p>
+</li>
+<li><p>已经使用了 git add 缓存了代码。</p>
+<p>git reset HEAD filepathname</p>
+<p>可以使用 git reset HEAD filepathname (比如:gitreset HEADreadmemd)来放弃指定文件的缓存，放弃所以的缓存可以使用gitreset HEAD命令。</p>
+<p>此命令用来清除 git 对于文件修改的缓存。相当于撤销gitadd 命令所在的工作。在使用本命令后，本地的修改并不会消失，而是回到了如(一)所示的状态。继续用(一)中的操作，就可以放弃本地的修改。</p>
+</li>
+<li><p>已经用git commit 提交了代码。</p>
+<p>可以使用 git reset—hard HEAD^ 来回退到上一次commit的状态。此命令可以用来回退到任意版本:</p>
+<p>git reset —hard commitid</p>
+</li>
+<li><p>回退所有内容到上一个版本</p>
+<p> git reset HEAD^</p>
+<p> 如果想要回退单个文件到上一个版本只需要加上对应的文件名即可。如：</p>
+<p> git reset HEAD^ a.py</p>
+</li>
+<li><p>向前回退到第3个版本</p>
+<p> git reset –soft HEAD~3  </p>
+<p> 如果想回退到某个提交的版本，那么只需要 git reset 057d  </p>
+</li>
+<li><p>将本地的状态回退到和远程的一样</p>
+<p> git reset –hard origin/master</p>
+</li>
+<li><p>回退到上一次提交的状态，按照某一次的commit完全反向的进行一次commit</p>
+<p> git revert HEAD</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>工作</category>
+      </categories>
+      <tags>
+        <tag>打工人</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>推荐算法工程笔记：Spark SQL</title>
+    <url>/2023/04/30/pyspark_mini_file/</url>
+    <content><![CDATA[<!-- # Spark SQL 小文件问题产生原因分析以及处理方案 -->
+<h1 id="Spark-SQL-小文件问题产生原因分析以及处理方案"><a href="#Spark-SQL-小文件问题产生原因分析以及处理方案" class="headerlink" title="Spark SQL 小文件问题产生原因分析以及处理方案"></a>Spark SQL 小文件问题产生原因分析以及处理方案</h1><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><pre><code>在生产中，无论是通过SQL语句或者Scala/Java等代码的方式使用Spark SQL处理数据，在Spark SQL写数据时，往往会遇到生成的小文件过多的问题，而管理这些大量的小文件，是一件非常头疼的事情。
+大量的小文件会影响Hadoop集群管理或者Spark在处理数据时的稳定性：
+
+1.Spark SQL写Hive或者直接写入HDFS，过多的小文件会对NameNode内存管理等产生巨大的压力，会影响整个集群的稳定运行
+
+2.容易导致task数过多，如果超过参数spark.driver.maxResultSize的配置（默认1g），会抛出类似如下的异常，影响任务的处理
+
+当然可以通过调大spark.driver.maxResultSize的默认配置来解决问题，但如果不能从源头上解决小文件问题，以后还可能遇到类似的问题。
+此外，Spark在处理任务时，一个分区分配一个task进行处理，多个分区并行处理，虽然并行处理能够提高处理效率，但不是意味着task数越多越好。如果数据量不大，过多的task运行反而会影响效率。
+</code></pre><h2 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h2><pre><code>下面通过一个例子，Spark SQL写数据时，导致产生分区数&quot;剧增&quot;的典型场景，通过分区数&quot;剧增&quot;，以及Spark中task数和分区数的关系等，来倒推小文件过多的可能原因（这里的分区数是指生成的DataSet/RDD的分区数，不是Hive分区表的分区概念）：
+</code></pre><h3 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h3><pre><code>&#39;&#39;&#39;
+1) 对表test_tab进行写入操作
+2) t1的分区数是100，t2的分区数是200，union all后生成的tmp分区数是300
+3) test_tab产生的小文件数基本也在300左右
+    select * from t1 union all select * from t2 as tmp;
+    insert overwrite table test_tab select * from tmp;
+&#39;&#39;&#39;
+</code></pre><h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><pre><code>1）执行上述insert操作时的分区并行度，主要受tmp的分区数（对应一个DataSet）影响，
+
+2）tmp的分区数主要受t1、t2以及union all的影响
+
+3）暂且不考虑t1或t2是物理表还是经过其他处理生成的临时表，它们的分区数是确定的，这里主要看经过union all处理后，生成的tmp的分区数和t1、t2的分区数有何关系？
+
+4）Spark SQL语句中的union all对应到DataSet中即为unionAll算子，底层调用union算子
+
+在之前的文章《重要|Spark分区并行度决定机制》中已经对Spark RDD中的union算子对union产生的新的RDD的分区数是如何受被union的多个RDD的影响的，做过详细介绍，这里直接给出结论：
+union生成RDD分区数分两种情况：
+（1）union的RDD分区器已定义并且他们的分区器相同
+多个父RDD具有相同的分区器，union后产生的RDD的分区器与父RDD相同且分区数也相同。
+（2）不满足第一个情况，则通过union产生的RDD的分区数为父RDD的分区数之和。
+
+同样的这种机制也可以套用到Spark SQL中的DataSet上，那么就很好解释了tmp的分区数为什么等于t1和t2的分区数的和。
+
+最后，Spark中一个task处理一个分区从而也会影响最终生成的文件数。
+
+当然上述只是以Spark SQL中的一个场景阐述了小文件产生过多的原因之一（分区数过多）。在数仓建设中，产生小文件过多的原因有很多种，比如：
+
+1.流式处理中，每个批次的处理执行保存操作也会产生很多小文件
+
+2.为了解决数据更新问题，同一份数据保存了不同的几个状态，也容易导致文件数过多
+
+3.transformer算子（union）操作后增加rdd分区。
+</code></pre><h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><pre><code>&#39;&#39;&#39;
+spark.sql.shuffle.partitions&quot;, &quot;800&quot;
+&#39;&#39;&#39;
+同时在利用pyspark写表时，需要按照如下形式：
+&#39;&#39;&#39;
+spark.sql(&quot;&quot;&quot;
+insert overwrite table  &quot;&quot;&quot;+table_name+&quot;&quot;&quot;
+select 
+    *
+from df_final_fea
+DISTRIBUTE BY pmod(hash(1000*rand(1)), 80)
+&quot;&quot;&quot;)
+&#39;&#39;&#39;
+
+这两个同时操作，可以避免小文件过多的问题。
+</code></pre>]]></content>
+      <categories>
+        <category>推荐工程</category>
+      </categories>
+      <tags>
+        <tag>推荐系统</tag>
+        <tag>pyspark</tag>
+      </tags>
+  </entry>
 </search>
